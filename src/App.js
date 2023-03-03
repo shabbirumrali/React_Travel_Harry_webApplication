@@ -1,24 +1,60 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react'
+import { getPlacesData } from './api';
+import { Header, List, Map, PlaceDetails } from './components'
+import { CssBaseline, Grid  } from '@mui/material'
+
+// css file
 import './App.css';
 
 function App() {
+  const [places, setPlaces] = useState([])
+  const [childClick, setChildClick] = useState(null)
+  
+  const [coordinates, setCoordinates] = useState({})
+  const [bounds, setBounds] = useState({})
+
+  const [isLoading, setIsLoading] = useState(false)
+  
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude} }) => {
+      setCoordinates({ lat: latitude, lng: longitude })
+    })
+  }, [])
+
+  useEffect(() => {
+    setIsLoading(true)
+    getPlacesData(bounds.sw, bounds.ne)
+    .then((data) => {
+      setPlaces(data)
+      setIsLoading(false)
+    })
+    .catch(err => console.log("this is an api error", err)) 
+
+  }, [coordinates, bounds])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <CssBaseline />
+      <Header />
+        <Grid container spacing={3} style={{width: '100%'}}>
+          <Grid item xs={12} md={4}>
+            <List
+              places={places}
+              childClick={childClick}
+              isLoading={isLoading}
+            />
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Map
+              places={places}
+              setCoordinates={setCoordinates}
+              coordinates={coordinates}
+              setBounds={setBounds}
+              setChildClick={setChildClick}
+            />
+          </Grid>
+        </Grid>
+    </>
   );
 }
 

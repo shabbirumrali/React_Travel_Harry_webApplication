@@ -1,0 +1,28 @@
+.form-control {
+    width: 140px;
+    margin-right: 10px !important;
+    margin-top: 20px !important;
+    margin-bottom: 30px;
+}
+.select-empty {
+    margin-top: 2px;
+}
+.loading {
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    padding: 25px;
+    margin-bottom: 30px;
+}
+.container .list {
+    height: 75vh;
+    overflow: auto;
+    margin-top: 20px;
+    padding: 0 10px 10px 10px;
+}
+.container .card-container {
+    padding: 0 !important;
+}
