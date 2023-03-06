@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Autocomplete } from '@react-google-maps/api'
 import { AppBar, Toolbar, Typography, InputBase, Box } from '@mui/material'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
@@ -6,7 +7,14 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import './styles.css'
 import { Padding } from '@mui/icons-material';
 
-const Header = () => {
+const Header = ({ setCoordinates }) => {
+  const [autocomplete, setAutocomplete] = useState(null)
+
+  const onPlaceChanged = () => {
+    const lat = autocomplete.getPlace().geometry.location.lat()
+    const lng = autocomplete.getPlace().geometry.location.lat()
+    setCoordinates({lat, lng})
+  }
 
   return (
       <AppBar position="static">
@@ -16,14 +24,17 @@ const Header = () => {
           </Typography>
           <Box display="flex" className="navigation_content">
             <Typography variant="h6" className="navigation_text">Explore new places</Typography>
-            {/* <Autocomplete> */}
+            <Autocomplete 
+              onLoad={(autoC) => setAutocomplete(autoC)}
+              onPlaceChanged={onPlaceChanged}
+            >
               <div className="navigation_search_box">
                 <InputBase placeholder="Search..." />
                 <div className="navigation_search_icon">
                   <SearchRoundedIcon />
                 </div>
               </div>
-            {/* </Autocomplete> */}
+            </Autocomplete>
           </Box>
         </Toolbar>
       </AppBar>

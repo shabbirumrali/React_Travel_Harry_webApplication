@@ -6,16 +6,13 @@ import PlaceDetails from '../PlaceDetails/PlaceDetails'
 import './List.css'
 
 
-const List = ({ places, childClick, isLoading }) => {
-  const [type, setType] = useState('')
-  const [rating, setRating] = useState('')
+const List = ({ places, childClick, isLoading, type, setType, rating, setRating }) => {
+
   const [elRefs, setElRefs] = useState([])
-  console.log("This is for testing purpose", Array(places.length))
 
   useEffect(() => {
     const refs = Array(places.length).fill().map((_, i) => elRefs[i] || createRef())
     setElRefs(refs)
-    console.log("checking inside useEffect", elRefs)
   }, [places])
 
   return (
@@ -29,20 +26,20 @@ const List = ({ places, childClick, isLoading }) => {
         <>
           <FormControl className='form-control'>
             <InputLabel>Type</InputLabel>
-            <Select value={type} onChange={(e) => setType(e.target.value)}>
+            <Select id="type" value={type} onChange={(e) => setType(e.target.value)}>
               <MenuItem value="restaurants">Restaurants</MenuItem>
-              <MenuItem value="hotels">Hotels</MenuItem>
               <MenuItem value="attractions">Attractions</MenuItem>
+              <MenuItem value="hotels">Hotels</MenuItem>
             </Select>
           </FormControl>
 
           <FormControl className='form-control'>
             <InputLabel>Rating</InputLabel>
-            <Select value={rating} onChange={(e) => setRating(e.target.value)}>
-              <MenuItem value={0}>All</MenuItem>
-              <MenuItem value={3}>Above 3.0</MenuItem>
-              <MenuItem value={4}>Above 4.0</MenuItem>
-              <MenuItem value={4.5}>Above 4.5</MenuItem>
+            <Select id="rating" value={rating} onChange={(e) => setRating(e.target.value)}>
+              <MenuItem value="0">All</MenuItem>
+              <MenuItem value="3">Above 3.0</MenuItem>
+              <MenuItem value="4">Above 4.0</MenuItem>
+              <MenuItem value="4.5">Above 4.5</MenuItem>
             </Select>
           </FormControl>
 
