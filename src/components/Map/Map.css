@@ -20,3 +20,13 @@
 .pointer {
     cursor: pointer;
 }
+.weather_detail {
+    width: 50px;
+    height: 50px;
+    background: rebeccapurple;
+    border-radius: 20%;
+}
+.weather_detail img {
+    width: 100%;
+    
+}

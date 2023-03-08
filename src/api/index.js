@@ -9,7 +9,7 @@ export const getPlacesData = async (type, sw, ne) => {
             tr_longitude: ne.lng
         },
         headers: {
-            'X-RapidAPI-Key': '7070e854dfmsha33f4dcfafa5a04p16eae9jsnc5befb3a6e7e',
+            'X-RapidAPI-Key': process.env.REACT_APP_GETPLACES_API_KEY,
             'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
         }
     })
@@ -18,10 +18,11 @@ export const getPlacesData = async (type, sw, ne) => {
 
 export const getWeatherData = async (city) => {
     try {
+        console.log("checking city value",city)
         const { data } = await axios.get('https://weatherapi-com.p.rapidapi.com/forecast.json', {
             params: {q: `${city}`, days: '3'},
             headers: {
-                'X-RapidAPI-Key': '7070e854dfmsha33f4dcfafa5a04p16eae9jsnc5befb3a6e7e',
+                'X-RapidAPI-Key': process.env.REACT_APP_WEATHER_API_KEY,
                 'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
             }
         })

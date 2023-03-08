@@ -33,26 +33,23 @@ function App() {
   useEffect(() => {
     if(bounds.sw && bounds.ne) {
       setIsLoading(true)
-
-      getWeatherData('london')
-      .then((data) => {
-        setWeatherData(data)
-        console.log("weather Info ", data)
-      })
-
       getPlacesData(type, bounds.sw, bounds.ne)
       .then((data) => {
         setPlaces(data?.filter(place => place.name && place.num_reviews > 0))
+        {
+          let city = data?.slice(0, 1).map(place => place.ranking_geo)
+          getWeatherData(city[0])
+            .then((data) => {
+              setWeatherData(data)
+              console.log("weather Info ", data)
+            })
+        }
         setFilteredPlaces([])
         setIsLoading(false)
-        console.log("Data from api", data)
       })
       .catch(err => console.log("this is an api error", err))
       }
   }, [type, bounds])
-
-  console.log(places)
-  console.log(filteredPlaces)
 
   return (
     <>
@@ -79,6 +76,7 @@ function App() {
               coordinates={coordinates}
               setBounds={setBounds}
               setChildClick={setChildClick}
+              weatherData={weatherData}
             />
           </Grid>
         </Grid>
